@@ -1,0 +1,7 @@
+! Input data for heat equation
+1.0	! D	- Diffusion constant
+41	- Number of grid points in x-direction
+41	! ny	- Number of grid points in y-direction
+10	! nt	- Number of time steps
+0.0001	! dt	- Time step
+1	! snapshot_freq

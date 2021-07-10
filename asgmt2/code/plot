@@ -1,0 +1,53 @@
+#!/bin/sh
+
+GNUPLOT=gnuplot
+script="splot.plt"
+
+if [ -e $script ]; then
+    rm -f $script
+fi
+
+echo "
+# Plot u(x,y,t) in the heat conduction problem
+#
+#     u  = a(u   + u   ),  0 <= x <= 1, 0 <= y <= 1, 0 <= t < oo.
+#      t      xx    yy
+#
+# For contour plot, the data must have a grid topology, i.e. all the isolines
+# are of the same length.  The data points (x,y,u1,u2...) are grouped of
+# the same size and separated by blank lines.
+#
+# Copyright(C) 2016-2021 Western University
+# Ge Baolai
+# Faculty of Science
+# SHARCNET | Compute Ontario | Compute Canada
+#
+# using gnuplot." > $script
+
+echo "set cntrparam bspline" >> $script
+echo "set parametric	# Must set to parametric" >> $script
+echo "set size square   # Make square, default display 5\":3\"" >> $script
+echo "set view ,,1,1.5" >> $script
+echo "set zrang[-1:1]" >> $script
+echo "set nokey" >> $script 
+echo "unset border" >> $script
+echo "unset xtics" >> $script
+echo "unset ytics" >> $script
+echo "unset ztics" >> $script
+echo "set hidden3d" >> $script
+
+echo "" >> $script
+echo "set term png medium" >> $script
+echo "" >> $script
+
+echo "set term png medium" >> $script
+
+ofiles=`ls output.*`
+
+for f in $ofiles; do
+    echo "set output \"$f.png\"" >> $script
+    echo "splot \"$f\" using 2:3:4 with line" >> $script
+    echo "pause -1 \"Hit return to exit.\"" >> $script
+done
+
+$GNUPLOT $script

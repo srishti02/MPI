@@ -1,0 +1,7 @@
+Fortran does not have unsigned integers and the maximum value used in the
+C and C++ programs cannot be stored in a 64-bit signed integer value in
+Fortran, thus, the maximum value is one power of 10 less in the Fortran 
+code than the C and C++ programs. This means the last loop the C and 
+C++ programs execute is not executed in the Fortran code --so don't
+interpret the results of the Fortran program as running faster than
+the C and C++ code.
